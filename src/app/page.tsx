@@ -1,13 +1,16 @@
-import ColorModeToggle from "@/components/ColorModeToggle";
-import { Button } from "@/components/ui/button";
+import CreatePost from "@/components/CreatePost";
+import { currentUser } from "@clerk/nextjs/server";
 
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import Image from "next/image";
-
-export default function Home() {
+export default async function Home() {
+  const user = await currentUser();
   return (
-    <div className="m-4">
-      <h1>Home Page Content</h1>
+    <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">
+      <div className="lg:col-span-6 bg-blue-600 h-[100vh]">
+        {user ? <CreatePost /> : null}
+      </div>
+      <div className="hidden lg:block lg:col-span-4 sticky top-20 bg-red-600 h-48">
+        who to follow
+      </div>
     </div>
   );
 }
